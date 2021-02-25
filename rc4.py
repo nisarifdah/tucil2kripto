@@ -60,17 +60,6 @@ def encrypt(key, text):
     return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
     #return hasil
 
-def decrypt(key, text):
-    t = convert_text(text)
-    #key = convert_text(key)
-    k = getkey(key)
-
-    result = []
-    for i in t:
-        r = ("%02X" % (i ^ next(k)))
-        result.append(r)
-    hasil = ''.join(result)
-    return(codecs.decode(hasil, 'hex_codec').decode('latin-1'))
 
 #a = encrypt('123','world')
 #print(a)
