@@ -23,7 +23,7 @@ def ksa1(key):
     key_length = len(key)
 
     lsfr = getLsfr(key)
-    
+
     S = list(range(256))
     j = 0
     for i in range(256):
@@ -31,10 +31,6 @@ def ksa1(key):
         S[i], S[j] = S[j], S[i]
 
     return S
-
-
-print(ksa('abc'),'\n\n')
-print(ksa1('abc'))
 
 
 def prga(x):
