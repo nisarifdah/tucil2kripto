@@ -71,10 +71,8 @@ btn_clear.grid(row=2, column=1, padx=5, pady=5)
 # Initialize radio button
 var1 = StringVar()
 var2 = StringVar()
-var3 = StringVar()
 var1.set(1)
 var2.set(1)
-var3.set(1)
 
 # Encryption mode
 lbl_mode = Label(master=frm_form, text='Choose mode:')

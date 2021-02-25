@@ -23,7 +23,6 @@ def ksa1(key):
     key_length = len(key)
 
     lsfr = getLsfr(key)
-    
     S = list(range(256))
     j = 0
     for i in range(256):
