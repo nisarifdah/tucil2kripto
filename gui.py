@@ -11,8 +11,8 @@ def compute():
     if(mode == '1' and checkErrorInput()): #input text
         lbl_result_text['text'] = execute(key, ent_message.get(), mode)
     elif(mode == '2' and checkErrorFile()): #file
-        filename = ent_file_name.get() + '.' + ent_file_ext.get()
         text = bytearray(execute(key, openFile('.temporary'), mode), 'latin-1')
+        filename = ent_file_name.get() + '.' + ent_file_ext.get()
         writeFile(text, filename)
         lbl_result_text['text'] = 'Success! Saved in ' + filename
 
@@ -52,8 +52,6 @@ def askOpenFile():
     if f is not None: 
         writeFile(f.read(),'.temporary')
         var1.set(2)
-        ent_file_name['state'] = 'normal'
-        ent_file_ext['state'] = 'normal'
         lbl_file_status['text'] = 'File successfully loaded'
 
 # Open file in read only and binary mode
@@ -76,8 +74,24 @@ def clear():
 
 # Copy function
 def copy():
+    if(lbl_result_text['text'] == 'Click button above to see magic'):
+        messagebox.showerror('Error', 'Encrypt something please!')
+        return
     window.clipboard_clear()
-    window.clipboard_append(lbl_result_text["text"])
+    window.clipboard_append(lbl_result_text['text'])
+
+# Save function
+def save():
+    if(lbl_result_text['text'] == 'Click button above to see magic'):
+        messagebox.showerror('Error', 'Encrypt something please!')
+        return
+    if(not(ent_file_name.get() and ent_file_ext.get())):
+        messagebox.showerror('Error', 'Enter file name and extension!')
+        return
+    text = bytearray(lbl_result_text['text'], 'latin-1')
+    filename = ent_file_name.get() + '.' + ent_file_ext.get()
+    writeFile(text, filename)
+    lbl_result_text['text'] = 'Success! Saved in ' + filename
 
 # Exit function 
 def qExit(): 
@@ -130,11 +144,11 @@ rad_mode.grid(row=5, column=1, padx=5, pady=5, sticky='w')
 
 # File option
 lbl_file_name = Label(master=frm_form, text='File name:')
-ent_file_name = Entry(master=frm_form, width=30, state='disabled')
+ent_file_name = Entry(master=frm_form, width=30)
 lbl_file_name.grid(row=6, column=0, padx=5, pady=5, sticky="w")
 ent_file_name.grid(row=6, column=1, padx=5, pady=5)
 lbl_file_ext = Label(master=frm_form, text='File extension:')
-ent_file_ext = Entry(master=frm_form, width=30, state='disabled')
+ent_file_ext = Entry(master=frm_form, width=30)
 lbl_file_ext.grid(row=7, column=0, padx=5, pady=5, sticky="w")
 ent_file_ext.grid(row=7, column=1, padx=5, pady=5)
 
@@ -153,6 +167,8 @@ lbl_result_text.grid(row=14, column=1, padx=5, pady=5, sticky="w")
 # Action button
 btn_copy = Button(master=frm_form, text='Copy result', width=10, command=copy)
 btn_copy.grid(row=15, column=1, padx=5, pady=5, sticky='w')
+btn_save = Button(master=frm_form, text='Save to file', width=10, command=save)
+btn_save.grid(row=15, column=1, padx=5, pady=5)
 btn_exit = Button(master=frm_form, text='Exit', width=5, command=qExit)
 btn_exit.grid(row=15, column=1, padx=5, pady=5, sticky='e')
 
