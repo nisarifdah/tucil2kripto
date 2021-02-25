@@ -26,8 +26,8 @@ def ksa1(key):
     
     S = list(range(256))
     j = 0
-    for i in range(a):
-        j = (j + S[i] + ksaKey[i % ksaKey_length] + key[i % key_length] + lsfr[i]) % 256
+    for i in range(256):
+        j = (j + S[i] + ksaKey[i % ksaKey_length] + int(ord(key[i % key_length])) + int(lsfr[i])) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
@@ -45,7 +45,7 @@ def prga(x):
         yield result
     
 def getkey(key):
-    a = ksa(key)
+    a = ksa1(key)
     return prga(a)
 
 def encrypt(key, text):
