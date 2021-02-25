@@ -2,11 +2,11 @@ import binascii
 import codecs
 from lsfr import *
 
-def convert_text(s):
+def convert(s): # Convert string to ASCII
     return ([ord(c) for c in s])
 
 def ksa(key):
-    cKey = convert_text(key)
+    cKey = convert(key)
     cKey_length = len(cKey)
     
     S = list(range(256))
@@ -17,12 +17,12 @@ def ksa(key):
 
     return S
 
-def ksa1(key):
+def ksa_complex(key):
+    lsfr = getLsfr(key)
+    key_length = len(key)
     ksaKey = ksa(key)
     ksaKey_length = len(ksaKey)
-    key_length = len(key)
 
-    lsfr = getLsfr(key)
     S = list(range(256))
     j = 0
     for i in range(256):
@@ -31,26 +31,23 @@ def ksa1(key):
 
     return S
 
-
 def prga(x):
     i = 0
     j = 0
-    
     while True:
         i = (i + 1) % 256
         j = (j + x[i]) % 256
         x[i], x[j] = x[j], x[i]
         result = x[(x[i] + x[j]) % 256]
         yield result
-    
-def getkey(key):
-    a = ksa1(key)
-    return prga(a)
 
-def encrypt(key, text):
-    #key = convert_text(key)
-    t = convert_text(text)
-    k = getkey(key)
+
+def execute(key, text, mode): # Encrypt or decrypt
+    if(mode == '1'): #input text
+        t = convert(text)
+    else: #file
+        t = text
+    k = prga(ksa_complex(key))
 
     result = []
     for i in t:
@@ -58,9 +55,3 @@ def encrypt(key, text):
         result.append(r)
     hasil = ''.join(result)
     return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
-    #return hasil
-
-
-#a = encrypt('123','world')
-#print(a)
-#A6 11 24 62 D2
