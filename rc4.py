@@ -71,16 +71,3 @@ def decrypt(key, text):
 
 
     
-b = convert_text('0123!klm')
-c = ksa(b)
-d = ksa1(b)
-e = prga(d)
-
-text = 'hello panda hello panda'
-key = '01qwerty!'
-cipher = 'A8D2373F7BB7C53414375F188CA354E0EFED75E1354035'
-a = encrypt(key, text)
-f = decrypt(key,cipher)
-
-print(a)
-print(f)
