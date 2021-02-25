@@ -22,10 +22,17 @@ def compute():
     else: #decryption
         lbl_result_text['text'] = (decrypt(key,text))
 
-def openFile(): 
+def askOpenFile(): 
     f = askopenfile(mode ='rb') 
     if f is not None: 
-        file_content = f.read() 
+        writeFile(f.read(),'.temporary')
+        messagebox.showinfo('Status', 'File successfully loaded!')
+
+# Write file in write and binary mode
+def writeFile(text, filename):
+    with open(filename, 'wb') as f:
+        f.write(text)
+        
 # Clear function
 def clear():
     ent_text.delete(0,END)
@@ -63,7 +70,7 @@ ent_key = Entry(master=frm_form, width=30)
 lbl_key.grid(row=1, column=0, padx=5, pady=5, sticky='w')
 ent_key.grid(row=1, column=1, padx=5, pady=5)
 
-btn_open = Button(master=frm_form, text='Open file', width=8, command=openFile)
+btn_open = Button(master=frm_form, text='Open file', width=8, command=askOpenFile)
 btn_open.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 btn_clear = Button(master=frm_form, text='Clear', width=5, command=clear)
 btn_clear.grid(row=2, column=1, padx=5, pady=5)
