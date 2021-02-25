@@ -58,7 +58,8 @@ def encrypt(key, text):
     for i in t:
         r = ("%02X" % (i ^ next(k)))
         result.append(r)
-    return ''.join(result)
+    hasil = ''.join(result)
+    return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
 
 def decrypt(key, text):
     t = binascii.unhexlify(text)
@@ -72,5 +73,13 @@ def decrypt(key, text):
     hasil = ''.join(result)
     return(codecs.decode(hasil, 'hex_codec').decode('utf-8'))
 
+'''
+text = 'hello panda hello panda'
+key = '1230lmn'
+a = encrypt(key,text)
+print(a)
 
-    
+cipher = '83F595A0931ADD93625531FC9428EAB55AF6ACBD058BAD'
+c = decrypt(key,cipher)
+print (c)
+'''
