@@ -1,14 +1,26 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter.filedialog import askopenfile
+from rc4 import *
 
 def compute():
     # Check if key empty
+    file_content = ''
     if(ent_key.get()==''):
         messagebox.showerror('Error', 'Enter key!')
         return
-    
-
+    # Get text and key
+    if(file_content == ''):
+        text = ent_text.get()
+    else:
+        text = file_content
+    key = ent_key.get()
+    # get mode
+    mode = var1.get()
+    if mode == ('1'): #encryption
+        lbl_result_text['text'] = (encrypt(key,text))
+    else: #decryption
+        lbl_result_text['text'] = (decrypt(key,text))
 
 def openFile(): 
     f = askopenfile(mode ='rb') 
@@ -55,6 +67,22 @@ btn_open = Button(master=frm_form, text='Open file', width=8, command=openFile)
 btn_open.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 btn_clear = Button(master=frm_form, text='Clear', width=5, command=clear)
 btn_clear.grid(row=2, column=1, padx=5, pady=5)
+
+# Initialize radio button
+var1 = StringVar()
+var2 = StringVar()
+var3 = StringVar()
+var1.set(1)
+var2.set(1)
+var3.set(1)
+
+# Encryption mode
+lbl_mode = Label(master=frm_form, text='Choose mode:')
+lbl_mode.grid(row=3, column=0, padx=5, pady=5, sticky="w")
+rad_mode = Radiobutton(master=frm_form,text='Encryption', variable = var1, value=1)
+rad_mode.grid(row=3, column=1, padx=5, pady=5, sticky='w')
+rad_mode = Radiobutton(master=frm_form,text='Decryption', variable = var1, value=2)
+rad_mode.grid(row=4, column=1, padx=5, pady=5, sticky='w')
 
 btn_compute = Button(master=frm_form, text='Go!', width=10, height=2, command=compute)
 btn_compute.grid(row=13, column=1, padx=5, pady=5, sticky='w')

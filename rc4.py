@@ -12,7 +12,7 @@ def ksa(key):
     S = list(range(256))
     j = 0
     for i in range(256):
-        j = (j + S[i] + int(cKey[i % cKey_length])) % 256
+        j = (j + S[i] + cKey[i % cKey_length]) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
@@ -23,11 +23,11 @@ def ksa1(key):
     key_length = len(key)
 
     lsfr = getLsfr(key)
-
+    
     S = list(range(256))
     j = 0
-    for i in range(256):
-        j = (j + S[i] + ksaKey[i % ksaKey_length] + int(ord(key[i % key_length])) + int(lsfr[i])) % 256
+    for i in range(a):
+        j = (j + S[i] + ksaKey[i % ksaKey_length] + key[i % key_length] + lsfr[i]) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
@@ -44,15 +44,14 @@ def prga(x):
         result = x[(x[i] + x[j]) % 256]
         yield result
     
-def getKey(key):
+def getkey(key):
     a = ksa(key)
     return prga(a)
 
-
 def encrypt(key, text):
-    key = convert_text(key)
+    #key = convert_text(key)
     t = convert_text(text)
-    k = getKey(key)
+    k = getkey(key)
 
     result = []
     for i in t:
@@ -60,26 +59,20 @@ def encrypt(key, text):
         result.append(r)
     hasil = ''.join(result)
     return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
+    #return hasil
 
 def decrypt(key, text):
-    t = binascii.unhexlify(text)
-    key = convert_text(key)
-    k = getKey(key)
+    t = convert_text(text)
+    #key = convert_text(key)
+    k = getkey(key)
 
     result = []
     for i in t:
         r = ("%02X" % (i ^ next(k)))
         result.append(r)
     hasil = ''.join(result)
-    return(codecs.decode(hasil, 'hex_codec').decode('utf-8'))
+    return(codecs.decode(hasil, 'hex_codec').decode('latin-1'))
 
-'''
-text = 'hello panda hello panda'
-key = '1230lmn'
-a = encrypt(key,text)
-print(a)
-
-cipher = '83F595A0931ADD93625531FC9428EAB55AF6ACBD058BAD'
-c = decrypt(key,cipher)
-print (c)
-'''
+#a = encrypt('123','world')
+#print(a)
+#A6 11 24 62 D2
