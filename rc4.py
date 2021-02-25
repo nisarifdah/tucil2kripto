@@ -12,7 +12,7 @@ def ksa(key):
     S = list(range(256))
     j = 0
     for i in range(256):
-        j = (j + S[i] + int(cKey[i % cKey_length])) % 256
+        j = (j + S[i] + cKey[i % cKey_length]) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
@@ -23,7 +23,6 @@ def ksa1(key):
     key_length = len(key)
 
     lsfr = getLsfr(key)
-
     S = list(range(256))
     j = 0
     for i in range(256):
@@ -58,8 +57,7 @@ def encrypt(key, text):
     for i in t:
         r = ("%02X" % (i ^ next(k)))
         result.append(r)
-    hasil = ''.join(result)
-    return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
+    return ''.join(result)
 
 def decrypt(key, text):
     t = binascii.unhexlify(text)
@@ -73,13 +71,5 @@ def decrypt(key, text):
     hasil = ''.join(result)
     return(codecs.decode(hasil, 'hex_codec').decode('utf-8'))
 
-'''
-text = 'hello panda hello panda'
-key = '1230lmn'
-a = encrypt(key,text)
-print(a)
 
-cipher = '83F595A0931ADD93625531FC9428EAB55AF6ACBD058BAD'
-c = decrypt(key,cipher)
-print (c)
-'''
+    
