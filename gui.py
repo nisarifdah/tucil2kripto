@@ -7,7 +7,7 @@ def compute():
     if(ent_key.get()==''):
         messagebox.showerror('Error', 'Enter key!')
         return
-
+    
 
 
 def openFile(): 
@@ -55,14 +55,6 @@ btn_open = Button(master=frm_form, text='Open file', width=8, command=openFile)
 btn_open.grid(row=2, column=1, padx=5, pady=5, sticky='w')
 btn_clear = Button(master=frm_form, text='Clear', width=5, command=clear)
 btn_clear.grid(row=2, column=1, padx=5, pady=5)
-
-# Initialize radio button
-var1 = StringVar()
-var2 = StringVar()
-var3 = StringVar()
-var1.set(1)
-var2.set(1)
-var3.set(1)
 
 btn_compute = Button(master=frm_form, text='Go!', width=10, height=2, command=compute)
 btn_compute.grid(row=13, column=1, padx=5, pady=5, sticky='w')

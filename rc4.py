@@ -1,34 +1,41 @@
 import binascii
 import codecs
+from lsfr import *
 
 def convert_text(s):
     return ([ord(c) for c in s])
 
 def ksa(key):
-    a = 256
-    key_length = len(key)
+    cKey = convert_text(key)
+    cKey_length = len(cKey)
     
     S = list(range(256))
     j = 0
-    for i in range(a):
-        j = (j + S[i] + key[i % key_length]) % 256
+    for i in range(256):
+        j = (j + S[i] + int(cKey[i % cKey_length])) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
 
-def ksa1(k):
-    key = ksa(k)
-    a = 256
+def ksa1(key):
+    ksaKey = ksa(key)
+    ksaKey_length = len(ksaKey)
     key_length = len(key)
-    k_length = len(k)
+
+    lsfr = getLsfr(key)
     
     S = list(range(256))
     j = 0
-    for i in range(a):
-        j = (j + S[i] + key[i % key_length] + k[i % k_length]) % 256
+    for i in range(256):
+        j = (j + S[i] + ksaKey[i % ksaKey_length] + int(ord(key[i % key_length])) + int(lsfr[i])) % 256
         S[i], S[j] = S[j], S[i]
 
     return S
+
+
+print(ksa('abc'),'\n\n')
+print(ksa1('abc'))
+
 
 def prga(x):
     i = 0
@@ -37,19 +44,19 @@ def prga(x):
     while True:
         i = (i + 1) % 256
         j = (j + x[i]) % 256
-        x[i] = x[j]
-        x[j] = x[i]
+        x[i], x[j] = x[j], x[i]
         result = x[(x[i] + x[j]) % 256]
         yield result
     
-def getkey(key):
+def getKey(key):
     a = ksa(key)
     return prga(a)
+
 
 def encrypt(key, text):
     key = convert_text(key)
     t = convert_text(text)
-    k = getkey(key)
+    k = getKey(key)
 
     result = []
     for i in t:
@@ -60,7 +67,7 @@ def encrypt(key, text):
 def decrypt(key, text):
     t = binascii.unhexlify(text)
     key = convert_text(key)
-    k = getkey(key)
+    k = getKey(key)
 
     result = []
     for i in t:
