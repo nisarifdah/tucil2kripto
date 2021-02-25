@@ -20,7 +20,7 @@ def compute():
     if mode == ('1'): #encryption
         lbl_result_text['text'] = (encrypt(key,text))
     else: #decryption
-        lbl_result_text['text'] = (decrypt(key,text))
+        lbl_result_text['text'] = (encrypt(key,text))
 
 def openFile(): 
     f = askopenfile(mode ='rb') 
