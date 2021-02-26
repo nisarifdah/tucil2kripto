@@ -156,7 +156,7 @@ ent_file_ext.grid(row=7, column=1, padx=5, pady=5)
 btn_compute = Button(master=frm_form, text='Encrypt', width=10, height=2, command=compute)
 btn_compute.grid(row=13, column=1, padx=5, pady=5, sticky='w')
 btn_compute = Button(master=frm_form, text='Decrypt', width=10, height=2, command=compute)
-btn_compute.grid(row=13, column=1, padx=5, pady=5)
+btn_compute.grid(row=13, column=2, padx=5, pady=5)
 
 # Result label
 lbl_result = Label(master=frm_form, text='Result:')
@@ -168,9 +168,9 @@ lbl_result_text.grid(row=14, column=1, padx=5, pady=5, sticky="w")
 btn_copy = Button(master=frm_form, text='Copy result', width=10, command=copy)
 btn_copy.grid(row=15, column=1, padx=5, pady=5, sticky='w')
 btn_save = Button(master=frm_form, text='Save to file', width=10, command=save)
-btn_save.grid(row=15, column=1, padx=5, pady=5)
+btn_save.grid(row=15, column=2, padx=5, pady=5)
 btn_exit = Button(master=frm_form, text='Exit', width=5, command=qExit)
-btn_exit.grid(row=15, column=1, padx=5, pady=5, sticky='e')
+btn_exit.grid(row=15, column=3, padx=5, pady=5, sticky='e')
 
 # Keeps window alive 
 window.mainloop()
