@@ -51,7 +51,7 @@ def execute(key, text, mode): # Encrypt or decrypt
 
     result = []
     for i in t:
-        r = ("%02X" % (i ^ next(k)))
+        r = ("%02X" % (i ^ next(k)))    # i xor k, format in 2-digit hex
         result.append(r)
     hasil = ''.join(result)
     return (codecs.decode(hasil, 'hex_codec').decode('latin-1'))
